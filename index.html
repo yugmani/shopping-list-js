@@ -14,19 +14,28 @@
   <body>
     <div class="container">
       <h1>Shopping List</h1>
-      <ol>
+      <form>
+        <input
+          type="text"
+          id="shopping-item"
+          placeholder="shopping item"
+          required
+        />
+        <button id="button-add" class="btn">Add Item</button>
+      </form>
+      <ol id="list-items">
         <li>
-          <p>
-            Swimming costume<span id="trash-can"
-              ><i class="fas fa-trash-alt"></i
-            ></span>
-          </p>
+          Swimming costume<span class="trash-can"
+            ><i class="fas fa-trash-alt"></i
+          ></span>
         </li>
         <li>
-          Story book<span id="trash-can"><i class="fas fa-trash-alt"></i></span>
+          Story book<span class="trash-can"
+            ><i class="fas fa-trash-alt"></i
+          ></span>
         </li>
         <li>
-          Banans<span id="trash-can"><i class="fas fa-trash-alt"></i></span>
+          Banans<span class="trash-can"><i class="fas fa-trash-alt"></i></span>
         </li>
       </ol>
     </div>
