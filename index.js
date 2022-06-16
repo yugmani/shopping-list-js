@@ -4,10 +4,42 @@ const listEl = document.getElementById("list-items");
 
 const items = ["hat", "shoes", "sunglass", "pizza"];
 
-window.onload = displayItems(items);
+const saveToLocalStorage = (arr) => {
+  arrJson = JSON.stringify(arr);
+  localStorage.setItem("items", arrJson);
+};
+
+const removeItem = function (e) {
+  const trashEl = document.querySelectorAll(".trash-can");
+
+  trashEl.forEach((trash) => {
+    trash.addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = e.target;
+      const parentTarget = target.parentElement.parentElement;
+      const contentTarget = parentTarget.textContent.trim();
+
+      const strArr = localStorage.getItem("items");
+      const array = JSON.parse(strArr);
+      const position = array.indexOf(contentTarget);
+
+      array.splice(position, 1);
+
+      saveToLocalStorage(array);
+      displayItems(array);
+    });
+  });
+};
+
+(function () {
+  const strArr = localStorage.getItem("items");
+  const array = JSON.parse(strArr);
+  displayItems(array);
+})();
 
 function displayItems(arr) {
   let html = "";
+
   arr.map((item) => {
     html += `
     <li>
@@ -19,27 +51,17 @@ function displayItems(arr) {
   });
 
   listEl.innerHTML = html;
+  removeItem();
 }
 
 btnEl.addEventListener("click", function (event) {
   event.preventDefault();
   let newItem = inputEl.value.trim();
-  items.push(newItem);
-  displayItems(items);
+  const strArr = localStorage.getItem("items");
+  const array = JSON.parse(strArr);
+
+  array.push(newItem);
+  saveToLocalStorage(array);
+  displayItems(array);
   inputEl.value = "";
-});
-
-const trashEl = document.querySelectorAll(".trash-can");
-
-trashEl.forEach((trash) => {
-  trash.addEventListener("click", function (e) {
-    const target = e.target;
-    console.log(target);
-    const parentTarget = target.parentElement.parentElement;
-    const contentTarget = parentTarget.textContent.trim();
-    const position = items.indexOf(contentTarget);
-    console.log(target, position);
-    items.splice(position, 1);
-    displayItems(items);
-  });
 });
